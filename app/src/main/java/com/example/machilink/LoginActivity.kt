@@ -14,7 +14,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.example.machilink.R  // パッケージ名が適切であることを確認
+import com.example.machilink.R
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Googleサインインオプションの設定
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))  // Firebase Consoleから取得したIDを設定
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
@@ -90,9 +90,11 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Log.d(TAG, "signInWithCredential:success")
                     val user = auth.currentUser
+                    // サインイン成功後の処理
                     updateUI(user)
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    // サインイン失敗時の処理
                     updateUI(null)
                 }
             }
@@ -105,6 +107,7 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Log.d(TAG, "signInWithEmail:success")
                     val user = auth.currentUser
+                    // サインイン成功後の処理
                     updateUI(user)
                 } else {
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
@@ -121,6 +124,7 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Log.d(TAG, "createUserWithEmail:success")
                     val user = auth.currentUser
+                    // アカウント作成成功後の処理
                     updateUI(user)
                 } else {
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
@@ -133,11 +137,12 @@ class LoginActivity : AppCompatActivity() {
     // ユーザーインターフェースを更新するメソッド
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
+            // サインイン成功後に次の画面へ遷移
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         } else {
-            // サインイン失敗時の処理
+            // サインイン失敗時の画面更新（例: エラーメッセージ表示）
         }
     }
 }
