@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "379753587660",
+    "project_id": "machilink-db3e1",
+    "storage_bucket": "machilink-db3e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:379753587660:android:4d6e1315fda39261a67369",
+        "android_client_info": {
+          "package_name": "com.example.machilink"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArpgXd2ECREUIaxA9ngyGMRXJDb1ty-fE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
