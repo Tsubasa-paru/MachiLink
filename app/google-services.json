@@ -12,7 +12,12 @@
           "package_name": "com.example.machilink"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "379753587660-77sq8ek2svq120t3qaqnt44vtds146ed.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyArpgXd2ECREUIaxA9ngyGMRXJDb1ty-fE"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "379753587660-77sq8ek2svq120t3qaqnt44vtds146ed.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

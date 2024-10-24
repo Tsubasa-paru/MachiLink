@@ -1,4 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MachiLink</string>
-    <string name="default_web_client_id">379753587660-77sq8ek2svq120t3qaqnt44vtds146ed.apps.googleusercontent.com</string>
+    <string name="transfer_points">Transfer Points</string>
+    <string name="transfer_via_nfc">Transfer via NFC</string>
+    <string name="transfer_via_bluetooth">Transfer via Bluetooth</string>
+    <string name="enter_recipient">Enter recipient email</string>
+    <string name="enter_amount">Enter amount</string>
+    <string name="current_balance">Current Balance: %d points</string>
+    <string name="insufficient_balance">Insufficient balance</string>
+    <string name="ok">OK</string>
+
+    <!-- ポイント転送関連 -->
+    <string name="current_balance_format">Current Balance: %d points</string>
+
+    <!-- ボタンのラベル -->
+    <string name="button_transfer">Transfer</string>
+    <string name="button_nearby_transfer">Transfer via Nearby</string>
+    <string name="button_bluetooth_transfer">Transfer via Bluetooth</string>
+
+    <!-- エラーメッセージ -->
+    <string name="error_invalid_amount">Please enter a valid amount</string>
+    <string name="error_invalid_recipient">Please enter a valid recipient</string>
+    <string name="error_insufficient_balance">Insufficient balance</string>
+    <string name="error_connection_failed">Connection failed</string>
+
+    <string name="permission_explanation">この機能を使用するには必要な権限を許可する必要があります。アプリの設定画面から権限を許可してください。</string>
+
+    <string name="permission_required">権限が必要です</string>
+    <string name="permission_explanation_detail">この機能を使用するには、Bluetooth、位置情報へのアクセス権限が必要です。これらの権限は、近くのデバイスを検出し、ポイントの転送を行うために使用されます。</string>
+    <string name="permission_denied_explanation">必要な権限が許可されていません。アプリの設定画面から権限を許可してください。\n\n権限が許可されていない場合、この機能を使用することはできません。</string>
+    <string name="grant_permission">権限を許可</string>
+    <string name="open_settings">設定を開く</string>
+    <string name="cancel">キャンセル</string>
+    <string name="permissions_not_granted">必要な権限が許可されていません</string>
+    <string name="transfer_success">%d ポイントの転送が完了しました</string>
+    <string name="select_device">デバイスを選択</string>
+    <string name="invalid_amount">有効な金額を入力してください</string>
+    <string name="invalid_recipient">受信者を入力してください</string>
+    <string name="transfer_failed">転送に失敗しました: %s</string>
+    <string name="nearby_transfer_started">近距離転送を開始しました</string>
+    <string name="bluetooth_transfer_started">Bluetooth転送を開始しました</string>
+    <string name="manual_transfer_started">手動転送を開始しました</string>
+    <string name="nearby_transfer">近距離転送</string>
+    <string name="transfer_failed_with_message">転送に失敗しました: %s</string>
+
 </resources>
