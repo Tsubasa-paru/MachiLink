@@ -7,11 +7,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import android.util.Log
+import com.example.machilink.data.model.PointTransferData
+import kotlinx.serialization.json.Json
 
 class NearbyConnectionsManager(private val context: Context) {
     private val scope = CoroutineScope(Dispatchers.Main)
     private val strategy = Strategy.P2P_POINT_TO_POINT
     private var isAdvertising = false
+    private var onPointsReceived: ((PointTransferData) -> Unit)? = null
 
     private val connectionLifecycleCallback = object : ConnectionLifecycleCallback() {
         override fun onConnectionInitiated(endpointId: String, info: ConnectionInfo) {
@@ -44,6 +47,9 @@ class NearbyConnectionsManager(private val context: Context) {
                 Payload.Type.BYTES -> {
                     val data = payload.asBytes()?.let { String(it) }
                     Log.d(TAG, "Received payload: $data from endpoint: $endpointId")
+                    if (data != null) {
+                        handleReceivedPoints(data)
+                    }
                 }
                 else -> Log.d(TAG, "Received unknown payload type from endpoint: $endpointId")
             }
@@ -58,6 +64,19 @@ class NearbyConnectionsManager(private val context: Context) {
                     Log.d(TAG, "Payload transfer failed to endpoint: $endpointId")
                 }
             }
+        }
+    }
+
+    fun setOnPointsReceivedListener(listener: (PointTransferData) -> Unit) {
+        onPointsReceived = listener
+    }
+
+    private fun handleReceivedPoints(data: String) {
+        try {
+            val transferData = Json.decodeFromString<PointTransferData>(data)
+            onPointsReceived?.invoke(transferData)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to process received data", e)
         }
     }
 
@@ -88,6 +107,40 @@ class NearbyConnectionsManager(private val context: Context) {
             }
     }
 
+    fun startDiscovery(callback: (Boolean, String?) -> Unit) {
+        val discoveryOptions = DiscoveryOptions.Builder().setStrategy(strategy).build()
+
+        Nearby.getConnectionsClient(context)
+            .startDiscovery(
+                "com.example.machilink",
+                endpointDiscoveryCallback,
+                discoveryOptions
+            )
+            .addOnSuccessListener {
+                Log.d(TAG, "Started discovery successfully")
+                callback(true, null)
+            }
+            .addOnFailureListener { e ->
+                Log.e(TAG, "Failed to start discovery", e)
+                callback(false, e.message)
+            }
+    }
+
+    private val endpointDiscoveryCallback = object : EndpointDiscoveryCallback() {
+        override fun onEndpointFound(endpointId: String, info: DiscoveredEndpointInfo) {
+            Nearby.getConnectionsClient(context)
+                .requestConnection(
+                    "Receiver Device",
+                    endpointId,
+                    connectionLifecycleCallback
+                )
+        }
+
+        override fun onEndpointLost(endpointId: String) {
+            Log.d(TAG, "Lost endpoint: $endpointId")
+        }
+    }
+
     fun stopAdvertising() {
         try {
             if (isAdvertising) {
@@ -102,7 +155,7 @@ class NearbyConnectionsManager(private val context: Context) {
 
     fun stopAllEndpoints() {
         try {
-            stopAdvertising()  // 広告を停止
+            stopAdvertising()
             Nearby.getConnectionsClient(context).stopAllEndpoints()
             Log.d(TAG, "Stopped all endpoints")
         } catch (e: Exception) {
@@ -110,7 +163,6 @@ class NearbyConnectionsManager(private val context: Context) {
         }
     }
 
-    // アクティビティのライフサイクルに合わせて呼び出すメソッドを追加
     fun onPause() {
         stopAdvertising()
     }

@@ -44,4 +44,10 @@
     <string name="nearby_transfer">近距離転送</string>
     <string name="transfer_failed_with_message">転送に失敗しました: %s</string>
 
+    <string name="receive_points">ポイントを受け取る</string>
+    <string name="waiting_for_sender">送信者を待っています...</string>
+    <string name="discovery_started">受信モードを開始しました</string>
+    <string name="discovery_failed">受信モードの開始に失敗しました</string>
+    <string name="receive_mode_failed">受信モードの開始に失敗しました</string>
+
 </resources>

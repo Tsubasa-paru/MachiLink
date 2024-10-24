@@ -233,6 +233,43 @@ class PointTransferActivity : AppCompatActivity() {
             transferButton.setOnClickListener {
                 initiateTransfer()
             }
+
+            receiveButton.setOnClickListener {
+                startReceiveMode()
+            }
+        }
+    }
+
+    private fun startReceiveMode() {
+        try {
+            val missingPermissions = logMissingPermissions()
+            if (missingPermissions.isNotEmpty()) {
+                showError(getString(R.string.permissions_not_granted))
+                checkAndRequestPermissions()
+                return
+            }
+
+            binding.progressBar.visibility = View.VISIBLE
+            binding.statusText.text = getString(R.string.waiting_for_sender)
+
+            nearbyManager.startDiscovery { success, error ->
+                runOnUiThread {
+                    if (success) {
+                        Toast.makeText(
+                            this,
+                            getString(R.string.discovery_started),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        showError(error ?: getString(R.string.discovery_failed))
+                        binding.progressBar.visibility = View.GONE
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error starting receive mode", e)
+            showError(getString(R.string.receive_mode_failed))
+            binding.progressBar.visibility = View.GONE
         }
     }
 
